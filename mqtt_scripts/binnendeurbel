@@ -1,0 +1,13 @@
+pattern="new STATE = RING"
+
+dmesg -C
+
+while :
+do
+ buffer=$(dmesg -t)
+ if [[ "$buffer" =~ .*"$pattern"$ ]]; then
+  /usr/bin/mosquitto_pub -u pi -P qwsxdc -h 192.168.0.107 -t Bticino/msg -m binnendeurBel
+  dmesg -C
+ fi
+ sleep 0.6
+done
