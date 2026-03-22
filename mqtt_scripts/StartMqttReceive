@@ -43,6 +43,16 @@ while :
 					# Write data to a file
 					echo "$DATA" > "$FILE_PATH"
 					;;
+				"mqttping")
+					# Respond with pong to ping for aliveness checks
+					if [ -n "${MQTT_USER}" ]; then
+						mosquitto_pub -h "${MQTT_HOST}" -p "${MQTT_PORT}" -t "Bticino/mqttpong" -u "${MQTT_USER}" -P "${MQTT_PASS}"
+					elif [ -n "${MQTT_CAFILE}" ]; then
+						mosquitto_pub -h "${MQTT_HOST}" -p "${MQTT_PORT}" -t "Bticino/mqttpong" --cafile "${MQTT_CAFILE}" --cert "${MQTT_CERTFILE}" --key "${MQTT_KEYFILE}"
+					else
+						mosquitto_pub -h "${MQTT_HOST}" -p "${MQTT_PORT}" -t "Bticino/mqttpong"
+					fi
+					;;
 				"execute_command")
 					# Execute a command and publish the result back to MQTT
 					# COMMAND_RESULT=$(eval "$DATA")
