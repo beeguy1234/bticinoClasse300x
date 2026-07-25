@@ -69,6 +69,7 @@ func captureCooperative(own *openwebnet.Client, port, warmupFrames int, timeout 
 		"!", "rtph264depay",
 		"!", "h264parse",
 		"!", "imxvpudec",
+		"!", "videoconvert",
 		"!", "jpegenc", "quality=90",
 		"!", "filesink", fmt.Sprintf("location=%s", tmp), "buffer-mode=2",
 	)
